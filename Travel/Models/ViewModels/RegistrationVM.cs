@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Travel.Models.ViewModels
+﻿namespace Travel.Models.ViewModels
 {
     public class RegistrationVM
     {
