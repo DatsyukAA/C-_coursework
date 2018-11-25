@@ -34,7 +34,7 @@ namespace Travel.Controllers
                         Password = model.Password,
                         FirstName = model.FirstName,
                         LastName = model.LastName,
-                        Test = model.Test
+                        Test = "user"
                     });
                dbContext.SaveChangesAsync();
 
