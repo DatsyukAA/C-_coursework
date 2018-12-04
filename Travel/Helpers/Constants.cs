@@ -9,7 +9,7 @@ namespace Travel.Helpers
     {
             public static class JwtClaimIndentifiers
             {
-                public const string Rol = "rol", Id = "id";
+                public const string Role = "role", Id = "id";
             }
             public static class JwtClaims
             {

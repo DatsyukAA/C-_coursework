@@ -26,7 +26,7 @@ namespace Travel.Auth
                 new Claim(JwtRegisteredClaimNames.Sub, userName),
                 new Claim(JwtRegisteredClaimNames.Jti, jwtOptions.JtiGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat,Math.Round((jwtOptions.IssuedAt.ToUniversalTime() - new DateTimeOffset(1970,1,1,0,0,0,TimeSpan.Zero)).TotalSeconds).ToString(),ClaimValueTypes.Integer),
-                claimsIdentity.FindFirst(Constants.JwtClaimIndentifiers.Rol),claimsIdentity.FindFirst(Constants.JwtClaimIndentifiers.Id)
+                claimsIdentity.FindFirst(Constants.JwtClaimIndentifiers.Role),claimsIdentity.FindFirst(Constants.JwtClaimIndentifiers.Id)
             };
 
             var jwt = new JwtSecurityToken
@@ -60,7 +60,7 @@ namespace Travel.Auth
             return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
             {
                 new Claim(Constants.JwtClaimIndentifiers.Id,id.ToString()),
-                new Claim(Constants.JwtClaimIndentifiers.Rol, role)
+                new Claim(Constants.JwtClaimIndentifiers.Role, role)
             });
         }
     }

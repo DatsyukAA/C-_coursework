@@ -6,10 +6,10 @@ import { SharedModule }       from '../shared/modules/shared.module';
 import { routing }  from './dashboard.routing';
 import { RootComponent } from './root/root.component';
 import { HomeComponent } from './home/home.component';
-import { DashboardService } from './services/dashboard.service';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AuthGuard } from '../auth.guard';
-import { SettingsComponent } from './settings/settings.component';
+import { DashboardService } from './services/dashboard.service';
 
 
 @NgModule({
@@ -17,10 +17,11 @@ import { SettingsComponent } from './settings/settings.component';
     CommonModule,
     FormsModule,
     routing,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
-  declarations: [RootComponent,HomeComponent, SettingsComponent],
-  exports:      [ ],
-  providers:    [AuthGuard,DashboardService]
+  declarations: [RootComponent,HomeComponent],
+  exports: [],
+  providers: [AuthGuard, DashboardService]
 })
 export class DashboardModule { }

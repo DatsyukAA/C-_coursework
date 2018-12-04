@@ -18,7 +18,7 @@ namespace Travel.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Travel.Models.Entites.Client", b =>
+            modelBuilder.Entity("Travel.Models.Entites.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,11 +32,11 @@ namespace Travel.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<string>("Test");
+                    b.Property<string>("Role");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

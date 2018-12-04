@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
-import { HomeDetails } from '../models/home.details.interface';
-import { DashboardService } from '../services/dashboard.service';
+import { ConfigService } from '../../shared/services/ConfigService';
+import { Http } from '@angular/http';
+import '../../rxjs-operators'
+import { DashboardService } from '../services/dashboard.service'
 
 @Component({
   selector: 'app-home',
@@ -10,20 +11,30 @@ import { DashboardService } from '../services/dashboard.service';
 })
 export class HomeComponent implements OnInit {
 
-  homeDetails: HomeDetails;
+  baseUrl: string = '';
+  somes: myint;
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(private http: Http, private configService: ConfigService, private dashboardService: DashboardService) {
+    this.baseUrl = configService.getApiURI();
+  }
 
   ngOnInit() {
 
-    this.dashboardService.getHomeDetails()
-    .subscribe((homeDetails: HomeDetails) => {
-      this.homeDetails = homeDetails;
-    },
-    error => {
-      //this.notificationService.printErrorMessage(error);
-    });
-    
+    this.dashboardService.getUserData().subscribe((result: myint) => {
+      console.log("RESULT");
+      console.log(result);
+      console.log("RESULT");
+      this.somes = result;
+    }, error => console.error(error));
   }
+}
 
+interface myint {
+  id: number;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  auth_token: string;
 }

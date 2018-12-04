@@ -14,16 +14,16 @@ namespace Travel.Auth
             this.dbContext = dbContext;
         }
 
-        public Client getClientByName(string name)
+        public User getClientByName(string name)
         {
-            if (dbContext.Clients.Where(x => x.Email == name).Count() > 0)
+            if (dbContext.Users.Where(x => x.Email == name).Count() > 0)
             {
-                return dbContext.Clients.Where(x => x.Email == name).FirstOrDefault();
+                return dbContext.Users.Where(x => x.Email == name).FirstOrDefault();
             }
             return null;
         }
 
-        public bool checkPassword(Client user, string password)
+        public bool checkPassword(User user, string password)
         {
             if (user.Password == password) return true;
             return false;

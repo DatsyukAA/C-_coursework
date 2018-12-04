@@ -4,16 +4,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.AspNetCore.WebSockets.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using Travel.Auth;
 using Travel.Data;
-using Travel.Helpers;
 using Constants = Travel.Helpers.Constants;
 
 namespace Travel
@@ -81,10 +80,10 @@ namespace Travel
             services.AddAuthorization(options =>
             {
                 foreach(string role in Constants.JwtClaims.ApiAccessRoles)
-                options.AddPolicy(role + "_access", policy => policy.RequireClaim(Constants.JwtClaimIndentifiers.Rol,role));
+                options.AddPolicy(role + "_access", policy => policy.RequireClaim(Constants.JwtClaimIndentifiers.Role,role));
             });
 
-            services.AddTransient<IHttpContextAccessor,HttpContextAccessor>();
+            services.TryAddTransient<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

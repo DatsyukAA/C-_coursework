@@ -12,7 +12,7 @@ namespace Travel.Validatiors
         public CredentialsValidator()
         {
             RuleFor(credential => credential.Email).NotEmpty().WithMessage("E-mail cannot be empty!");
-            RuleFor(credential => credential.Password).NotEmpty().WithMessage("Passwrod cannot be empty!");
+            RuleFor(credential => credential.Password).NotEmpty().WithMessage("Password cannot be empty!");
         }
     }
 }

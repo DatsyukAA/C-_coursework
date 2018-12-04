@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { UserRegistration } from '../models/userRegistrationModel';
-import { ConfigService } from '../utils/config';
+import { ConfigService } from '../services/ConfigService';
 
 import { BaseService } from "./BaseService";
 

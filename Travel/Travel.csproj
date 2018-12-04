@@ -30,19 +30,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\dashboard\services\dashboard.service.ts" />
     <None Remove="ClientApp\src\app\shared\models\credentialsModel.ts" />
     <None Remove="ClientApp\src\app\shared\models\userRegistrationModel.ts" />
     <None Remove="ClientApp\src\app\shared\services\BaseService.ts" />
     <None Remove="ClientApp\src\app\shared\services\UserService.ts" />
-    <None Remove="ClientApp\src\app\shared\utils\config.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\dashboard\services\dashboard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\models\credentialsModel.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\models\userRegistrationModel.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\services\BaseService.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\services\UserService.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\shared\utils\config.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\services\ConfigService.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ClientApp\src\app\dashboard\models\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

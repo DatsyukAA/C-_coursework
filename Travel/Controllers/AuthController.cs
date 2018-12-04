@@ -46,11 +46,11 @@ namespace Travel.Controllers
 
         private ClaimsIdentity GetClaimsIdentity(string userName, string Password)
         {
-            Client userToVerify = userManager.getClientByName(userName);
+            User userToVerify = userManager.getClientByName(userName);
             if (userToVerify == null) return new ClaimsIdentity();
             if (userManager.checkPassword(userToVerify,Password))
             {
-                return jwtFactory.GenerateClaimsIdentity(userName, userToVerify.Id, userToVerify.Test);
+                return jwtFactory.GenerateClaimsIdentity(userName, userToVerify.Id, userToVerify.Role);
             }
 
             return new ClaimsIdentity();

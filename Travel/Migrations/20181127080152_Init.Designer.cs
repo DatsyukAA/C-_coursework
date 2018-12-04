@@ -9,8 +9,8 @@ using Travel.Data;
 namespace Travel.Migrations
 {
     [DbContext(typeof(TravelDbContext))]
-    [Migration("20181115073734_initMigration")]
-    partial class initMigration
+    [Migration("20181127080152_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,7 +20,7 @@ namespace Travel.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Travel.Models.Entites.Client", b =>
+            modelBuilder.Entity("Travel.Models.Entites.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -34,11 +34,11 @@ namespace Travel.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<string>("Test");
+                    b.Property<string>("Role");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

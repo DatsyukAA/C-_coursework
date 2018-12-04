@@ -25,16 +25,16 @@ namespace Travel.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (!(dbContext.Clients.Where(x => x.Email == model.Email).Count() > 0))
+            if (!(dbContext.Users.Where(x => x.Email == model.Email).Count() > 0))
             {
 
-                dbContext.Clients.AddAsync(new Client
+                dbContext.Users.AddAsync(new User
                     {
                         Email = model.Email,
                         Password = model.Password,
                         FirstName = model.FirstName,
                         LastName = model.LastName,
-                        Test = "user"
+                        Role = "user"
                     });
                dbContext.SaveChangesAsync();
 

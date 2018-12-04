@@ -16,7 +16,7 @@ import { AccountModule }  from './account/account.module';
 /* Dashboard Imports */
 import { DashboardModule }  from './dashboard/dashboard.module';
 
-import { ConfigService } from './shared/utils/config';
+import { ConfigService } from './shared/services/ConfigService';
 
 @NgModule({
   declarations: [

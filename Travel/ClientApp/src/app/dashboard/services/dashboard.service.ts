@@ -1,35 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
-
-import { HomeDetails } from '../models/home.details.interface'; 
-import { ConfigService } from '../../shared/utils/config';
-
-import {BaseService} from '../../shared/services/BaseService';
-
-import { Observable } from 'rxjs/Rx'; 
-
-// Add the RxJS Observable operators we need in this app.
+import { ConfigService } from '../../shared/services/ConfigService';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import '../../rxjs-operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
-
-export class DashboardService extends BaseService {
-
-  baseUrl: string = ''; 
-
+export class DashboardService {
+  private baseUrl: string;
   constructor(private http: Http, private configService: ConfigService) {
-     super();
-     this.baseUrl = configService.getApiURI();
+    this.baseUrl = configService.getApiURI();
   }
-
-  getHomeDetails(): Observable<HomeDetails> {
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      let authToken = localStorage.getItem('auth_token');
-      headers.append('Authorization', `Bearer ${authToken}`);
-  
-    return this.http.get(this.baseUrl + "/dashboard/home",{headers})
-      .map(response => response.json())
-      .catch(this.handleError);
-  }  
+  getUserData() {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let authToken = localStorage.getItem('auth_token');
+    headers.append('Authorization', 'Bearer ' + authToken);
+    let options = new RequestOptions({ headers: headers });
+    console.log("ITS A HEADERS");
+    console.log(headers);
+    console.log("ITS A HEADERS");
+    return this.http.get(this.baseUrl + '/SampleData/getUserData', options).map(res => res.json());
+  }
 }
