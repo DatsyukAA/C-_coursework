@@ -1,44 +1,36 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Travel.Data;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace Travel.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     public class SampleDataController : Controller
     {
-        private static string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly TravelDbContext dbContext;
+        private readonly ClaimsPrincipal user;
 
-        [HttpGet("[action]")]
-        public IEnumerable<WeatherForecast> WeatherForecasts()
+        public SampleDataController(TravelDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                DateFormatted = DateTime.Now.AddDays(index).ToString("d"),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            });
+            this.dbContext = dbContext;
+            this.user = httpContextAccessor.HttpContext.User;
         }
 
-        public class WeatherForecast
+        [HttpGet]
+        public IActionResult getUserData()
         {
-            public string DateFormatted { get; set; }
-            public int TemperatureC { get; set; }
-            public string Summary { get; set; }
+            var userId = this.user.Claims.Single(c => c.Type == "id");
+            var user = dbContext.Users.Single(c => c.Id.ToString() == userId.Value);
 
-            public int TemperatureF
+            return new OkObjectResult(new
             {
-                get
-                {
-                    return 32 + (int)(TemperatureC / 0.5556);
-                }
-            }
+                user.Email,
+                user.Password,
+                user.Role,
+            });
+
         }
     }
 }
