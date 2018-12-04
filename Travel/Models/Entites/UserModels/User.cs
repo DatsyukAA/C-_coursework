@@ -1,5 +1,4 @@
-﻿
-namespace Travel.Models.Entites
+﻿namespace Travel.Models.Entites.UserModels
 {
     public class User
     {

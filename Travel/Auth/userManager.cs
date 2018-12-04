@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Travel.Data;
-using Travel.Models.Entites;
+using Travel.Models.Entites.UserModels;
 
 namespace Travel.Auth
 {

@@ -2,10 +2,10 @@
 using Travel.Auth;
 using Travel.Models.ViewModels;
 using Newtonsoft.Json;
-using Travel.Models.Entites;
 using System.Security.Claims;
 using Travel.Data;
 using Microsoft.Extensions.Options;
+using Travel.Models.Entites.UserModels;
 
 namespace Travel.Controllers
 {
