@@ -27,19 +27,17 @@ namespace Travel.Controllers
 
             if (!(dbContext.Users.Where(x => x.Email == model.Email).Count() > 0))
             {
-                User user = new User
-                {
-                    Email = model.Email,
-                    Password = model.Password,
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Role = "client"
-                };
-               dbContext.Users.AddAsync(user);
                 dbContext.Clients.AddAsync(new Client
                 {
-                    User = user
-                });
+                    User = new User
+                    {
+                        Email = model.Email,
+                        Password = model.Password,
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        Role = "client"
+                    }
+            });
                dbContext.SaveChangesAsync();
 
                 return new OkObjectResult("Account created");

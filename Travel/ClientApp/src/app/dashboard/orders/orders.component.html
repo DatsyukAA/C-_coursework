@@ -1,0 +1,27 @@
+<p *ngIf="status"><em>Loading...</em></p>
+
+<table class='table' *ngIf="orders">
+  <thead>
+    <tr>
+      <th>Voucher</th>
+      <th>Status</th>
+      <th>Begins in</th>
+      <th>Ends in</th>
+      <th>buttons</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let order of orders">
+
+    <tr>
+      <td>{{ order.voucherId }}</td>
+      <td>{{ order.status }}</td>
+      <td>{{ order.beginDate }}</td>
+      <td>{{ order.endDate }}</td>
+      <td>
+        <button class="btn btn-primary" type="button" (click)="onUpdate(order)">Update</button>
+        <button class="btn btn-primary" type="button" (click)="onDelete(order.id)">Delete</button>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
