@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Travel.Data;
 using Travel.Models.Entites.UserModels;
 
@@ -15,11 +16,14 @@ namespace Travel.Auth
 
         public User getClientByName(string name)
         {
-            if (dbContext.Users.Where(x => x.Email == name).Count() > 0)
+            try
             {
                 return dbContext.Users.Where(x => x.Email == name).FirstOrDefault();
             }
-            return null;
+            catch (ArgumentNullException ex)
+            {
+                return null;
+            }
         }
 
         public bool checkPassword(User user, string password)

@@ -10,8 +10,8 @@ using Travel.Data;
 namespace Travel.Migrations
 {
     [DbContext(typeof(TravelDbContext))]
-    [Migration("20181207205122_test2")]
-    partial class test2
+    [Migration("20181213153050_test5")]
+    partial class test5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,13 +29,13 @@ namespace Travel.Migrations
 
                     b.Property<DateTime>("BeginDate");
 
-                    b.Property<int?>("ClientId");
+                    b.Property<int>("ClientId");
 
                     b.Property<DateTime>("EndDate");
 
                     b.Property<int>("Status");
 
-                    b.Property<int?>("VoucherId");
+                    b.Property<int>("VoucherId");
 
                     b.HasKey("Id");
 
@@ -90,7 +90,7 @@ namespace Travel.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CountryId");
+                    b.Property<int>("CountryId");
 
                     b.Property<string>("HotelName");
 
@@ -107,7 +107,7 @@ namespace Travel.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("HotelId");
+                    b.Property<int>("HotelId");
 
                     b.Property<string>("ResortName");
 
@@ -128,17 +128,15 @@ namespace Travel.Migrations
 
                     b.Property<DateTime>("EnableTo");
 
-                    b.Property<int?>("OperatorId");
+                    b.Property<bool>("InCurrentList");
 
                     b.Property<int?>("ReportId");
 
                     b.Property<bool>("Status");
 
-                    b.Property<int?>("TourId");
+                    b.Property<int>("TourId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OperatorId");
 
                     b.HasIndex("ReportId");
 
@@ -153,7 +151,7 @@ namespace Travel.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -183,7 +181,7 @@ namespace Travel.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("Id");
 
@@ -201,6 +199,8 @@ namespace Travel.Migrations
                     b.Property<int?>("OperatorId");
 
                     b.Property<string>("ReportText");
+
+                    b.Property<DateTime>("SendTime");
 
                     b.HasKey("Id");
 
@@ -234,11 +234,13 @@ namespace Travel.Migrations
                 {
                     b.HasOne("Travel.Models.Entites.UserModels.Client", "Client")
                         .WithMany("TravelHistory")
-                        .HasForeignKey("ClientId");
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Travel.Models.Entites.OrderModels.Voucher", "Voucher")
                         .WithMany()
-                        .HasForeignKey("VoucherId");
+                        .HasForeignKey("VoucherId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Travel.Models.Entites.OrderModels.Tour", b =>
@@ -260,36 +262,36 @@ namespace Travel.Migrations
                 {
                     b.HasOne("Travel.Models.Entites.OrderModels.TourModels.Country", "Country")
                         .WithMany()
-                        .HasForeignKey("CountryId");
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Travel.Models.Entites.OrderModels.TourModels.Resort", b =>
                 {
                     b.HasOne("Travel.Models.Entites.OrderModels.TourModels.Hotel", "Hotel")
                         .WithMany()
-                        .HasForeignKey("HotelId");
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Travel.Models.Entites.OrderModels.Voucher", b =>
                 {
-                    b.HasOne("Travel.Models.Entites.UserModels.Operator")
-                        .WithMany("VoucherList")
-                        .HasForeignKey("OperatorId");
-
                     b.HasOne("Travel.Models.Entites.UserModels.OperatorModels.Report")
                         .WithMany("VoucherList")
                         .HasForeignKey("ReportId");
 
                     b.HasOne("Travel.Models.Entites.OrderModels.Tour", "Tour")
                         .WithMany()
-                        .HasForeignKey("TourId");
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Travel.Models.Entites.UserModels.Administrator", b =>
                 {
                     b.HasOne("Travel.Models.Entites.UserModels.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Travel.Models.Entites.UserModels.Client", b =>
@@ -304,7 +306,8 @@ namespace Travel.Migrations
                 {
                     b.HasOne("Travel.Models.Entites.UserModels.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Travel.Models.Entites.UserModels.OperatorModels.Report", b =>

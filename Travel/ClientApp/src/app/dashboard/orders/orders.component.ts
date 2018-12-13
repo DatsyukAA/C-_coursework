@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../../shared/services/ConfigService';
 import { Http } from '@angular/http';
-import '../../rxjs-operators'
-import { DashboardService } from '../services/dashboard.service'
+import '../../rxjs-operators';
+import { DashboardService } from '../services/dashboard.service';
+import { iorder } from '../../shared/models/interfacesmodels';
 
 @Component({
   selector: 'app-orders',
@@ -26,20 +27,11 @@ export class OrdersComponent implements OnInit {
 
   onDelete(order: number) {
     this.dashboardService.deleteOrderData(order).subscribe((result) => {
-      console.log(result);
     }, error => console.error(error));
   }
+
   onUpdate(order) {
 
   }
-}
-
-interface iorder {
-  id: number;
-  clientId: number;
-  voucherId: number;
-  status: number;
-  beginDate: string;
-  endDate: string;
 }
 

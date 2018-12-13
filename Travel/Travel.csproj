@@ -30,13 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20181204100100_Init.cs" />
-    <Compile Remove="Migrations\20181204100100_Init.Designer.cs" />
-    <Compile Remove="Migrations\20181207195242_test1.cs" />
-    <Compile Remove="Migrations\20181207195242_test1.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="ClientApp\src\app\dashboard\models\IOrder.ts" />
     <None Remove="ClientApp\src\app\dashboard\services\dashboard.service.ts" />
     <None Remove="ClientApp\src\app\shared\models\credentialsModel.ts" />
@@ -46,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\shared\models\IOrder.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\interfacesmodels.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dashboard\services\dashboard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\models\credentialsModel.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\models\userRegistrationModel.ts" />

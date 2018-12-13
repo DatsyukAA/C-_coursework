@@ -14,12 +14,12 @@ namespace Travel.Controllers
 {
     [Authorize(Policy = "admin_access")]
     [Route("api/[controller]/[action]")]
-    public class OrdersController : Controller
+    public class AdminsController : Controller
     {
         private readonly TravelDbContext dbContext;
         private readonly ClaimsPrincipal user;
 
-        public OrdersController(TravelDbContext dbContext, IHttpContextAccessor httpContextAccessor)
+        public AdminsController(TravelDbContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
             this.dbContext = dbContext;
             this.user = httpContextAccessor.HttpContext.User;

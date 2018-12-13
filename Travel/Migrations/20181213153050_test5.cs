@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Travel.Migrations
 {
-    public partial class test2 : Migration
+    public partial class test5 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,7 +44,7 @@ namespace Travel.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CountryId = table.Column<int>(nullable: true),
+                    CountryId = table.Column<int>(nullable: false),
                     HotelName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -55,7 +55,7 @@ namespace Travel.Migrations
                         column: x => x.CountryId,
                         principalTable: "Countries",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,7 +64,7 @@ namespace Travel.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(nullable: true)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,7 +74,7 @@ namespace Travel.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,7 +102,7 @@ namespace Travel.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(nullable: true)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,7 +112,7 @@ namespace Travel.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -121,7 +121,7 @@ namespace Travel.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    HotelId = table.Column<int>(nullable: true),
+                    HotelId = table.Column<int>(nullable: false),
                     ResortName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -132,7 +132,7 @@ namespace Travel.Migrations
                         column: x => x.HotelId,
                         principalTable: "Hotels",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -142,7 +142,8 @@ namespace Travel.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     OperatorId = table.Column<int>(nullable: true),
-                    ReportText = table.Column<string>(nullable: true)
+                    ReportText = table.Column<string>(nullable: true),
+                    SendTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -195,22 +196,16 @@ namespace Travel.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    TourId = table.Column<int>(nullable: true),
+                    TourId = table.Column<int>(nullable: false),
                     Status = table.Column<bool>(nullable: false),
                     EnableFrom = table.Column<DateTime>(nullable: false),
                     EnableTo = table.Column<DateTime>(nullable: false),
-                    OperatorId = table.Column<int>(nullable: true),
+                    InCurrentList = table.Column<bool>(nullable: false),
                     ReportId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vouchers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Vouchers_Operators_OperatorId",
-                        column: x => x.OperatorId,
-                        principalTable: "Operators",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Vouchers_Reports_ReportId",
                         column: x => x.ReportId,
@@ -222,7 +217,7 @@ namespace Travel.Migrations
                         column: x => x.TourId,
                         principalTable: "Tours",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -231,8 +226,8 @@ namespace Travel.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ClientId = table.Column<int>(nullable: true),
-                    VoucherId = table.Column<int>(nullable: true),
+                    ClientId = table.Column<int>(nullable: false),
+                    VoucherId = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     BeginDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false)
@@ -245,13 +240,13 @@ namespace Travel.Migrations
                         column: x => x.ClientId,
                         principalTable: "Clients",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Orders_Vouchers_VoucherId",
                         column: x => x.VoucherId,
                         principalTable: "Vouchers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -308,11 +303,6 @@ namespace Travel.Migrations
                 name: "IX_Tours_ResortId",
                 table: "Tours",
                 column: "ResortId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vouchers_OperatorId",
-                table: "Vouchers",
-                column: "OperatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vouchers_ReportId",
