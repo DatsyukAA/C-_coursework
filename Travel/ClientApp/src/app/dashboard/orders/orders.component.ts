@@ -13,14 +13,16 @@ import { iorder } from '../../shared/models/interfacesmodels';
 export class OrdersComponent implements OnInit {
 
   baseUrl: string = '';
-  orders: iorder;
+  orders: iorder[];
+  updateinfo: iorder;
+  status = true;
 
   constructor(private http: Http, private configService: ConfigService, private dashboardService: DashboardService) {
     this.baseUrl = configService.getApiURI();
   }
 
   ngOnInit() {
-    this.dashboardService.getOrdersData().subscribe((result: iorder) => {
+    this.dashboardService.getOrdersData().subscribe((result: iorder[]) => {
       this.orders = result;
     }, error => console.error(error));
   }
@@ -28,10 +30,33 @@ export class OrdersComponent implements OnInit {
   onDelete(order: number) {
     this.dashboardService.deleteOrderData(order).subscribe((result) => {
     }, error => console.error(error));
+    this.dashboardService.getOrdersData().subscribe((result: iorder[]) => {
+      this.orders = result;
+    }, error => console.error(error));
   }
 
   onUpdate(order) {
+    this.updateinfo = order;
+    this.status = false;
+  }
 
+  onUpdateForm(clientId, voucherId, status: number, beginDate, endDate: string) {
+    this.updateinfo.clientId = clientId;
+    this.updateinfo.voucherId = voucherId;
+    this.updateinfo.status = status;
+    this.updateinfo.beginDate = beginDate;
+    this.updateinfo.endDate = endDate;
+    console.log(this.updateinfo);
+    this.dashboardService.updateOrderData(this.updateinfo).subscribe(() => {
+      this.status = true;
+      this.dashboardService.getOrdersData().subscribe((result: iorder[]) => {
+        this.orders = result;
+      }, error => console.error(error));
+
+    });
+  }
+  back() {
+    this.status = true;
   }
 }
 

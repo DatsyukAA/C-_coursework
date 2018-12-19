@@ -11,5 +11,7 @@ namespace Travel.Models.Entites.OrderModels
         public DateTime EnableFrom { get; set; }
         public DateTime EnableTo { get; set; }
         public bool InCurrentList { get; set; }
+        public int Cost { get; set; }
+        public int Discount { get; set; }
     }
 }

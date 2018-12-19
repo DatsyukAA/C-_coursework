@@ -59,8 +59,8 @@ namespace Travel.Controllers
                 Id = order.Id,
                 Client = client,
                 Status = order.Status,
-                BeginDate = DateTime.ParseExact(order.BeginDate,"yyyy-MM-dd",null),
-                EndDate = DateTime.ParseExact(order.EndDate, "yyyy-MM-dd", null),
+                BeginDate = DateTime.ParseExact(order.BeginDate,"dd.MM.yyyy",null),
+                EndDate = DateTime.ParseExact(order.EndDate, "dd.MM.yyyy", null),
                 Voucher = dbContext.Vouchers.SingleOrDefault(x => x.Id == order.VoucherId)
             };
             dbContext.Orders.Update(local_order);

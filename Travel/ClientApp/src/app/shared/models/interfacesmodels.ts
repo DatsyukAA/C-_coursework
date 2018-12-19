@@ -16,11 +16,12 @@ export interface ivoucher
   beginDate: string;
   endDate: string;
   inCurrentList: boolean;
+  cost: number;
 }
 
 export interface searchdata
 {
-  id: number,
+  voucherId: number,
   beginDate: string;
   endDate: string;
 }

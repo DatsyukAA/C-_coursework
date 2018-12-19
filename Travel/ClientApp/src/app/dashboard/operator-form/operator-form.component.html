@@ -12,6 +12,7 @@
         <th>Status code</th>
         <th>Enable From</th>
         <th>Enable To</th>
+        <th>Cost</th>
         <th>In Current List</th>
         <th>Buttons</th>
       </tr>
@@ -24,6 +25,7 @@
         <td>{{ voucher.status }}</td>
         <td>{{ voucher.beginDate }}</td>
         <td>{{ voucher.endDate }}</td>
+        <td>{{ voucher.cost }}</td>
         <td *ngIf="voucher.inCurrentList">true</td>
         <td *ngIf="!voucher.inCurrentList">false</td>
         <td><button class="btn btn-primary" type="button" (click)="changeStatus(voucher.id)">Change Status</button></td>

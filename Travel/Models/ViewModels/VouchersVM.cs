@@ -8,5 +8,7 @@
         public string BeginDate { get; set; }
         public string EndDate { get; set; }
         public bool InCurrentList { get; set; }
+        public int Cost { get; set; }
+        public int Discount { get; set; }
     }
 }

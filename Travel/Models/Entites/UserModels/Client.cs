@@ -9,5 +9,6 @@ namespace Travel.Models.Entites.UserModels
         public int UserId { get; set; }
         public User User { get; set; }
         public List<Order> TravelHistory { get; set; }
+        public int Cash { get; set; }
     }
 }

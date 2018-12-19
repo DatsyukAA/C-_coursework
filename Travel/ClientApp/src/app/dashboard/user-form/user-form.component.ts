@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { DashboardService } from '../services/dashboard.service';
-import { ivoucher, searchdata, itour } from '../../shared/models/interfacesmodels';
+import { ivoucher, itour, searchdata } from '../../shared/models/interfacesmodels';
 import { ConfigService } from '../../shared/services/ConfigService';
 
 @Component({
@@ -14,10 +14,28 @@ export class UserFormComponent implements OnInit {
   baseUrl: string;
   resultVouchers: ivoucher[];
   tours: itour[];
-  cn: string = "asfdgh";
+  country: string;
+  hotel: string;
+  resort: string;
 
   constructor(private dashboardService: DashboardService, private configService: ConfigService) {
     this.baseUrl = configService.getApiURI();
+  }
+
+  onChangeCountry(newValue) {
+    console.log(newValue);
+    this.hotel = null;
+    this.country = newValue;
+  }
+
+  onChangeHotel(newValue) {
+    console.log(newValue);
+    this.hotel = newValue;
+  }
+
+  onChangeResort(newValue) {
+    console.log(newValue);
+    this.resort = newValue;
   }
 
   ngOnInit() {
@@ -28,21 +46,25 @@ export class UserFormComponent implements OnInit {
     });
   }
 
-  getSearchResult(resortId: number)
+  getSearchResult()
   {
-    this.dashboardService.getSearchResult(resortId).subscribe((result: ivoucher[]) =>
-    {
-      this.resultVouchers = result;
-    });
+    if (this.resort != "") {
+      var local_resortId = this.tours.find(tour => tour.resortName == this.resort).resortId;
+      console.log(local_resortId);
+      this.dashboardService.getSearchResult(local_resortId).subscribe((result: ivoucher[]) => {
+        console.log(result);
+        this.resultVouchers = result;
+      });
+    }
+    else {
+      console.log("not valid value");
+    }
   }
 
   makeAnOrder(voucherId: number, beginDate, endDate: string) {
-    let orderData: searchdata;
-    orderData.id = voucherId;
-    orderData.beginDate = beginDate;
-    orderData.endDate = endDate;
-    console.log(orderData);
-    this.dashboardService.makeAnOrder(orderData).subscribe((result) =>
+    let searchData: searchdata = { voucherId: voucherId, beginDate: beginDate, endDate: endDate }
+    console.log(voucherId, beginDate, endDate);
+    this.dashboardService.makeAnOrder(searchData).subscribe((result) =>
     {
       console.log(result);
     });

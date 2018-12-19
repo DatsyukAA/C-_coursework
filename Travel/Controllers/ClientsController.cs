@@ -36,7 +36,7 @@ namespace Travel.Controllers
                 toursvm.Add(new ToursVM
                 {
                     Id = tour.Id,
-                    CounryId = tour.Counry.Id,
+                    CountryId = tour.Counry.Id,
                     CountryName = tour.Counry.CountryName,
                     HotelId = tour.Hotel.Id,
                     HotelName = tour.Hotel.HotelName,
@@ -45,16 +45,15 @@ namespace Travel.Controllers
                     Status = tour.Status
                 });
             }
-            return new OkObjectResult(tours);
+            return new OkObjectResult(toursvm);
         }
 
-        [HttpGet]
-        public IActionResult getSearchResult([FromQuery]int resortId)
+        [HttpPost]
+        public IActionResult getSearchResult([FromBody]int resortId)
         {
             List<Voucher> vouchers = new List<Voucher>();
 
-            var myvouchers = dbContext.Vouchers.Include(x => x.Tour).Include(x => x.Tour.Resort);
-            vouchers = myvouchers.Where(x => x.InCurrentList == true && x.Tour.Resort.Id == resortId).ToList();
+            vouchers = dbContext.Vouchers.Include(x => x.Tour).Include(x => x.Tour.Resort).Where(x => x.InCurrentList == true && x.Tour.Resort.Id == resortId).ToList();
 
             ArrayList vouchersvm = new ArrayList();
             foreach (Voucher voucher in vouchers)
@@ -66,7 +65,9 @@ namespace Travel.Controllers
                     Status = voucher.Status,
                     BeginDate = voucher.EnableFrom.ToShortDateString(),
                     EndDate = voucher.EnableTo.ToShortDateString(),
-                    InCurrentList = voucher.InCurrentList
+                    InCurrentList = voucher.InCurrentList,
+                    Cost = voucher.Cost,
+                    Discount = voucher.Discount
                 });
             }
             return new OkObjectResult(vouchersvm);
@@ -75,23 +76,27 @@ namespace Travel.Controllers
         [HttpPost]
         public IActionResult makeAnOrder([FromBody]OrdersVM order)
         {
-            
             var local_voucher = dbContext.Vouchers.Include(c => c.Tour).SingleOrDefault(x => x.Id == order.VoucherId);
-            var local_order = new Order
-            {
-                ClientId = order.ClientId,
-                VoucherId = order.VoucherId,
-                Status = order.Status,
-                BeginDate = DateTime.ParseExact(order.BeginDate, "yyyy-MM-dd", null),
-                EndDate = DateTime.ParseExact(order.EndDate, "yyyy-MM-dd", null)
-            };
-            dbContext.Orders.Add(local_order);
             var userId = user.Claims.SingleOrDefault(c => c.Type == "id").Value;
             var local_user = dbContext.Clients.Include(c => c.User).SingleOrDefault(x => x.UserId.ToString() == userId);
+            if ( local_user.Cash >= (local_voucher.Cost - local_voucher.Cost * local_voucher.Discount/100))
+            {
+            var local_order = new Order
+            {
+                ClientId = local_user.Id,
+                VoucherId = local_voucher.Id,
+                Status = 0,
+                BeginDate = DateTime.ParseExact(order.BeginDate, "dd.MM.yyyy", null),
+                EndDate = DateTime.ParseExact(order.EndDate, "dd.MM.yyyy", null)
+            };
+            dbContext.Orders.Add(local_order);
             local_user.TravelHistory.Add(local_order);
+            local_user.Cash = local_user.Cash - local_voucher.Cost;
             dbContext.Clients.Update(local_user);
             dbContext.SaveChanges();
-            return Ok();
+            return new OkObjectResult("order accepted");
+            }
+            return new BadRequestObjectResult("need more cash");
         }
     }
 }

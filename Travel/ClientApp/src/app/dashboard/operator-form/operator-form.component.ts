@@ -26,20 +26,20 @@ export class OperatorFormComponent implements OnInit {
   }
 
   changeStatus(voucher: number) {
-    console.log(this.vouchers);
-    this.dashboardService.changeVoucherStatus(voucher).subscribe((result: ivoucher[]) =>
+    this.dashboardService.changeVoucherStatus(voucher).subscribe(() =>
     {
-      this.vouchers = result;
+      this.dashboardService.getVoucherData()
+        .subscribe((result: ivoucher[]) => {
+          this.vouchers = result;
+        }, error => console.error(error));
     });
+    
   }
 
   sendReport(report: string)
   {
     console.log(report);
-    this.dashboardService.sendReport(report).subscribe((result) =>
-    {
-      console.log(result);
-    });
+    this.dashboardService.sendReport(report);
   }
 
 }

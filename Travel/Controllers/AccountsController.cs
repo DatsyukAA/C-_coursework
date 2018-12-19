@@ -36,7 +36,8 @@ namespace Travel.Controllers
                         FirstName = model.FirstName,
                         LastName = model.LastName,
                         Role = "client"
-                    }
+                    },
+                    Cash = 99999 
             });
                dbContext.SaveChangesAsync();
 

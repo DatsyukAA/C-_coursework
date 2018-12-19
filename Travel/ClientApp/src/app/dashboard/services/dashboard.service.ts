@@ -43,7 +43,7 @@ export class DashboardService {
     let authToken = localStorage.getItem('auth_token');
     headers.append('Authorization', 'Bearer ' + authToken);
     let options = new RequestOptions({ headers: headers });
-    return this.http.put(this.baseUrl + '/Operators/changeVoucherStatus',voucher, options).map(res => res.json());
+    return this.http.put(this.baseUrl + '/Operators/changeVoucherStatus',voucher, options);
   }
   sendReport(report: string) {
     let headers = new Headers();
@@ -59,17 +59,17 @@ export class DashboardService {
     headers.append('Content-Type', 'application/json');
     let authToken = localStorage.getItem('auth_token');
     headers.append('Authorization', 'Bearer ' + authToken);
-    let options = new RequestOptions({ headers: headers, body: resortId });
-    return this.http.get(this.baseUrl + '/Clients/getSearchResult', options).map(res => res.json());
+    let options = new RequestOptions({ headers: headers });
+    return this.http.post(this.baseUrl + '/Clients/getSearchResult', JSON.stringify(resortId), options).map(res => res.json());
   }
 
-  makeAnOrder(orderData: searchdata){
+  makeAnOrder(orderData: searchdata) {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     let authToken = localStorage.getItem('auth_token');
     headers.append('Authorization', 'Bearer ' + authToken);
     let options = new RequestOptions({ headers: headers });
-    return this.http.post(this.baseUrl + '/Operators/makeAnOrder', JSON.stringify(orderData), options).map(res => res.json());
+    return this.http.post(this.baseUrl + '/Clients/makeAnOrder', JSON.stringify(orderData), options).map(res => res.json());
   }
 
   getToursData(){
@@ -79,5 +79,14 @@ export class DashboardService {
     headers.append('Authorization', 'Bearer ' + authToken);
     let options = new RequestOptions({ headers: headers });
     return this.http.get(this.baseUrl + '/Clients/getToursData', options).map(res => res.json());
+  }
+
+  updateOrderData(order: iorder) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let authToken = localStorage.getItem('auth_token');
+    headers.append('Authorization', 'Bearer ' + authToken);
+    let options = new RequestOptions({ headers: headers });
+    return this.http.put(this.baseUrl + '/Admins/updateOrderData', JSON.stringify(order), options);
   }
 }

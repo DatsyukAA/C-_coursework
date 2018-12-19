@@ -1,46 +1,47 @@
 <p *ngIf="!tours"><em>Loading...</em></p>
 
-
-<select id="coutrySelect">
-  <option *ngFor="let tour of tours">{{tour.counry.countryName}}</option>
+<select *ngIf="tours" (change)="onChangeCountry($event.target.value)">
+  <option></option>
+  <option *ngFor="let tour of tours">{{tour.countryName}}</option>
 </select>
 
-<select onchange="func()" id="hotelSelect">
-  <ng-container  *ngFor="let tour of tours">
-    <option>{{tour.hotel.hotelName}}</option>
-  </ng-container>
-  <option>123321</option>
-</select>
-
-<select id="resortSelect">
+<select *ngIf="country" (change)="onChangeHotel($event.target.value)">
+  <option></option>
   <ng-container *ngFor="let tour of tours">
-    <option>{{tour.resort.resortName}}</option>
+    <option *ngIf="tour.countryName == country">{{tour.hotelName}}</option>
   </ng-container>
 </select>
 
-<button type="submit" class="btn btn-primary" (click)="func()">Search</button>
+<ng-container *ngIf="country">
+  <select *ngIf="hotel" (change)="onChangeResort($event.target.value)">
+    <option></option>
+    <ng-container *ngFor="let tour of tours">
+      <option *ngIf="tour.hotelName == hotel">{{tour.resortName}}</option>
+    </ng-container>
+  </select>
+</ng-container>
+<button type="submit" class="btn btn-primary" (click)="getSearchResult()">Search</button>
 
-<table class='table' *ngIf="vouchers">
+<table class='table' *ngIf="resultVouchers">
   <thead>
     <tr>
-      <th>Id</th>
-      <th>Country</th>
-      <th>Hotel</th>
-      <th>Resort</th>
       <th>Begin Date</th>
       <th>End Date</th>
+      <th>Cost</th>
+      <th>Discount</th>
+      <th>Order settings</th>
     </tr>
   </thead>
-  <tbody *ngFor="let voucher of vouchers">
+  <tbody *ngFor="let voucher of resultVouchers">
 
     <tr>
-      <td>{{ tour.id }}</td>
-      <td>{{ tour.countryName }}</td>
-      <td>{{ tour.hotelName }}</td>
-      <td>{{ tour.resortName }}</td>
-      <td><input type="text" class="form-control" id="begindate" placeholder="tour.beginDate" name="begindate" #begindate /></td>
+      <td>{{ voucher.id }}</td>
+      <td>{{ voucher.endDate }}</td>
+      <td>{{ voucher.cost }}</td>
+      <td>{{ voucher.discount }} %</td>
+      <td><input type="text" class="form-control" id="begindate" placeholder="input begin date" name="begindate" #begindate /></td>
       <td><input type="text" class="form-control" id="enddate" placeholder=" input end date" name="enddate" #enddate /></td>
-      <td><button type="submit" class="btn btn-primary" (click)="func(tour.id,begindate.value,enddate.value)">Make an order</button></td>
+      <td><button type="submit" class="btn btn-primary" (click)="makeAnOrder(voucher.id,begindate.value,enddate.value)">Make an order</button></td>
     </tr>
   </tbody>
 </table>

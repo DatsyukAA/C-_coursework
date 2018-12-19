@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Travel.Models.Entites.UserModels
+﻿namespace Travel.Models.Entites.UserModels
 {
     public class Administrator
     {

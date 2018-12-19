@@ -1,26 +1,40 @@
 <p *ngIf="order"><em>Loading...</em></p>
 
-<table class='table' *ngIf="orders">
-  <thead>
-    <tr>
-      <th>Voucher</th>
-      <th>Status</th>
-      <th>Begins in</th>
-      <th>Ends in</th>
-      <th>buttons</th>
-    </tr>
-  </thead>
-  <tbody *ngFor="let order of orders">
+<ng-container *ngIf="status">
+  <table class='table' *ngIf="orders">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Voucher</th>
+        <th>Status</th>
+        <th>Begins in</th>
+        <th>Ends in</th>
+        <th>buttons</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let order of orders">
 
-    <tr>
-      <td>{{ order.voucherId }}</td>
-      <td>{{ order.status }}</td>
-      <td>{{ order.beginDate }}</td>
-      <td>{{ order.endDate }}</td>
-      <td>
-        <button class="btn btn-primary" type="button" (click)="onUpdate(order)">Update</button>
-        <button class="btn btn-primary" type="button" (click)="onDelete(order.id)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+      <tr>
+        <td>{{order.id}}</td>
+        <td>{{ order.voucherId }}</td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.beginDate }}</td>
+        <td>{{ order.endDate }}</td>
+        <td>
+          <button class="btn btn-primary" type="button" (click)="onUpdate(order)">Update</button>
+          <button class="btn btn-primary" type="button" (click)="onDelete(order.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>
+<ng-container *ngIf="!status">
+  <button class="btn btn-primary" type="button" (click)="back()">Back</button>
+  <br />
+  <input #clientId value="{{updateinfo.clientId}}"/>
+  <input #voucherId value="{{updateinfo.voucherId}}"/>
+  <input #status value="{{updateinfo.status}}"/>
+  <input #beginDate value="{{updateinfo.beginDate}}"/>
+  <input #endDate value="{{updateinfo.endDate}}"/>
+  <button class="btn btn-primary" type="button" (click)="onUpdateForm(clientId.value,voucherId.value,status.value,beginDate.value,endDate.value)">Update</button>
+</ng-container>

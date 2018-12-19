@@ -3,7 +3,7 @@
     public class ToursVM
     {
         public int Id { get; set; }
-        public int CounryId { get; set; }
+        public int CountryId { get; set; }
         public string CountryName { get; set; }
         public int HotelId { get; set; }
         public string HotelName { get; set; }

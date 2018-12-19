@@ -41,7 +41,8 @@ namespace Travel.Controllers
                     Status = voucher.Status,
                     BeginDate = voucher.EnableFrom.ToShortDateString(),
                     EndDate = voucher.EnableTo.ToShortDateString(),
-                    InCurrentList = voucher.InCurrentList
+                    InCurrentList = voucher.InCurrentList,
+                    Cost = voucher.Cost
                 });
             }
             return new OkObjectResult(vouchersvm);
