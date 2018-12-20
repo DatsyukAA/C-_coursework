@@ -10,6 +10,9 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AuthGuard } from '../auth.guard';
 import { DashboardService } from './services/dashboard.service';
+import { OrdersComponent } from './orders/orders.component';
+import { OperatorFormComponent } from './operator-form/operator-form.component';
+import { UserFormComponent } from './user-form/user-form.component';
 
 
 @NgModule({
@@ -20,7 +23,7 @@ import { DashboardService } from './services/dashboard.service';
     SharedModule,
     HttpClientModule
   ],
-  declarations: [RootComponent,HomeComponent],
+  declarations: [RootComponent,HomeComponent, OrdersComponent, OperatorFormComponent, UserFormComponent],
   exports: [],
   providers: [AuthGuard, DashboardService]
 })

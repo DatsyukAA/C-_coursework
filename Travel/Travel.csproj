@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\dashboard\models\IOrder.ts" />
     <None Remove="ClientApp\src\app\dashboard\services\dashboard.service.ts" />
     <None Remove="ClientApp\src\app\shared\models\credentialsModel.ts" />
     <None Remove="ClientApp\src\app\shared\models\userRegistrationModel.ts" />
@@ -38,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\shared\models\interfacesmodels.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\dashboard\services\dashboard.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\models\credentialsModel.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\models\userRegistrationModel.ts" />

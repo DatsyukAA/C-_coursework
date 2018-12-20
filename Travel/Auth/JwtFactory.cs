@@ -48,6 +48,7 @@ namespace Travel.Auth
             var response = new
             {
                 id = identity.Claims.SingleOrDefault(c => c.Type == "id").Value,
+                rol = identity.Claims.SingleOrDefault(c => c.Type == "rol").Value,
                 auth_token = jwtFactory.GenerateEncodedToken(userName, identity),
                 expires_in = (int)jwtOptions.ValidFor.TotalSeconds
             };

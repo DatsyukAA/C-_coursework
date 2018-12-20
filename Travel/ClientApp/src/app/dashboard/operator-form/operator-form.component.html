@@ -1,0 +1,34 @@
+<p *ngIf="!vouchers"><em>Loading...</em></p>
+
+
+    <input type="text" class="form-control" id="reportText" placeholder="Report text" name="reportText"  #reportText/>
+    <button type="submit" class="btn btn-primary" (click)="sendReport(reportText.value)">Send report</button>
+
+  <table class='table' *ngIf="vouchers">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Tour</th>
+        <th>Status code</th>
+        <th>Enable From</th>
+        <th>Enable To</th>
+        <th>Cost</th>
+        <th>In Current List</th>
+        <th>Buttons</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let voucher of vouchers">
+
+      <tr>
+        <td>{{ voucher.id }}</td>
+        <td>{{ voucher.tourId }}</td>
+        <td>{{ voucher.status }}</td>
+        <td>{{ voucher.beginDate }}</td>
+        <td>{{ voucher.endDate }}</td>
+        <td>{{ voucher.cost }}</td>
+        <td *ngIf="voucher.inCurrentList">true</td>
+        <td *ngIf="!voucher.inCurrentList">false</td>
+        <td><button class="btn btn-primary" type="button" (click)="changeStatus(voucher.id)">Change Status</button></td>
+      </tr>
+    </tbody>
+  </table>
